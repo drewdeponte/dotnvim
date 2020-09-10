@@ -1,4 +1,22 @@
+# My NeoVim Configuration
 
+My personal NeoVim configuration and plugins I use
+
+## Installation
+
+```
+mkdir -p ~/.config/
+git clone git://github.com/drewdeponte/dotnvim.git ~/.config/nvim
+```
+
+## Install Plugins
+
+Launch nvim and run the following:
+
+```
+:PlugInstall
+:UpdateRemotePlugins
+```
 
 ## Setup Python for NeoVim providers
 
@@ -18,4 +36,14 @@ pip install neovim
 pyenv activate neovim3
 pip3 install neovim
 ```
+
+## Setup Prettier
+
+```
+brew install prettier
+```
+
+## Check Health
+
+Launch nvim and run `:checkhealth` to make sure everything is good.
 
