@@ -37,6 +37,22 @@ pyenv activate neovim3
 pip3 install neovim
 ```
 
+## Setup Ruby for NeoVim providers
+
+```
+brew install rbenv
+
+rbenv install 2.7.1
+```
+
+Add `eval "$(rbenv init -)"` to your `~/.zshrc`.
+
+Open terminal with updated `~/.zshrc` and run the following:
+
+```
+gem install neovim
+```
+
 ## Setup Prettier
 
 ```
