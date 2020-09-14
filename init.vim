@@ -106,6 +106,24 @@ let g:netrw_liststyle = 3
 let g:netrw_banner = 0
 
 " ----------------------------------------------
+" Alternate File Switching
+" ----------------------------------------------
+
+" Run a given vim command on the results of alt from a given path.
+" See usage below.
+function! AltCommand(path, vim_command)
+  let l:alternate = system("alt " . a:path)
+  if empty(l:alternate)
+    echo "No alternate file for " . a:path . " exists!"
+  else
+    exec a:vim_command . " " . l:alternate
+  endif
+endfunction
+
+" Find the alternate file for the current path and open it
+nnoremap <leader>. :w<cr>:call AltCommand(expand('%'), ':e')<cr>
+
+" ----------------------------------------------
 " Misc Preferences
 " ----------------------------------------------
 
