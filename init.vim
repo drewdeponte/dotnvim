@@ -15,8 +15,8 @@ let g:python3_host_prog = '~/.pyenv/versions/neovim3/bin/python'
 
 " Specify a directory for plugins
 call plug#begin('~/.local/share/nvim/plugged')
-Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim'
+Plug 'jremmen/vim-ripgrep'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'uptech/vim-slack-format'
 Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
@@ -82,9 +82,13 @@ let mapleader = ","
 " Fuzzy Finding
 " ----------------------------------------------
 
+if executable('rg')
+  let g:ctrlp_user_command = 'rg %s --files --hidden --color=never --glob ""'
+endif
+
 " Files & Buffers commands are provided by fzf
-map <leader>f :Files<CR>
-map <leader>b :Buffers<CR>
+map <leader>f :CtrlP<CR>
+map <leader>b :CtrlPBuffer<CR>
 
 " ----------------------------------------------
 " AutoCompletion
