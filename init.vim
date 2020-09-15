@@ -59,6 +59,7 @@ set nosmarttab
 au FileType markdown setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=0 nosmarttab
 au FileType tf setlocal expandtab tabstop=4 shiftwidth=2 softtabstop=0 smarttab
 au FileType javascript setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=0 smarttab
+au FileType htmldjango setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=0 smarttab
 
 " ----------------------------------------------
 " Line Numbering
