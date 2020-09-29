@@ -22,6 +22,8 @@ Plug 'uptech/vim-slack-format'
 Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
+Plug 'plasticboy/vim-markdown'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 " Initialize plugin system
 call plug#end()
 
