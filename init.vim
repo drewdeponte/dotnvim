@@ -164,5 +164,21 @@ nmap <leader>gd :TSDefPreview<CR>
 
 autocmd FileType typescript setlocal formatprg=prettier\ --parser\ typescript
 
+" ----------------------------------------------
+" Markdown Support
+" ----------------------------------------------
 
+" disable header folding
+let g:vim_markdown_folding_disabled = 1
+
+" do not use conceal feature, the implementation isn't good
+let g:vim_markdown_conceal = 0
+
+" support front matter of various formats
+let g:vim_markdown_frontmatter = 1 " for YAML format
+let g:vim_markdown_toml_frontmatter = 1 " for TOML format
+let g:vim_markdown_json_frontmatter = 1 " for JSON format
+
+" don't close the preview tab when switching to other buffers
+let g:mkdp_auto_close = 0
 
