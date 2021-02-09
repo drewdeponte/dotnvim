@@ -1,31 +1,9 @@
 " --------------------------------------------
-" Providers
+" Configuration around Project rc files
 " --------------------------------------------
 
-let g:python_host_prog = '~/.pyenv/versions/neovim2/bin/python'
-let g:python3_host_prog = '~/.pyenv/versions/neovim3/bin/python'
-
-" --------------------------------------------
-" Plugins
-" --------------------------------------------
-
-" :PlugInstall - install
-" :PlugUpdate - update or install
-" :PlugStatus - status of plugins
-
-" Specify a directory for plugins
-call plug#begin('~/.local/share/nvim/plugged')
-Plug 'jremmen/vim-ripgrep'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'uptech/vim-slack-format'
-Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-commentary'
-Plug 'plasticboy/vim-markdown'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-" Initialize plugin system
-call plug#end()
+" enable project specific .vimrc files
+set exrc
 
 " --------------------------------------------
 " Configuration around Tabs, Indentation, Etc.
@@ -77,70 +55,62 @@ au FileType html setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=0 smartta
 set number
 set relativenumber
 
+" Min number of characters to use for line number column
+set numberwidth=5
+
 " ----------------------------------------------
 " Leader Key
 " ----------------------------------------------
-
 let mapleader = ","
-
-" ----------------------------------------------
-" Fuzzy Finding
-" ----------------------------------------------
-
-if executable('rg')
-  let g:ctrlp_user_command = 'rg %s --files --hidden --color=never --glob ""'
-endif
-
-" Files & Buffers commands are provided by fzf
-map <leader>f :CtrlP<CR>
-map <leader>b :CtrlPBuffer<CR>
-
-" ----------------------------------------------
-" AutoCompletion
-" ----------------------------------------------
-
-let g:deoplete#enable_at_startup = 1
 
 " ----------------------------------------------
 " NetRW - File Browser Mode
 " ----------------------------------------------
-
 " choose the tree view
-let g:netrw_liststyle = 3
+" let g:netrw_liststyle = 0
 " hide the default banner
-let g:netrw_banner = 0
-
-" ----------------------------------------------
-" Alternate File Switching
-" ----------------------------------------------
-
-" Run a given vim command on the results of alt from a given path.
-" See usage below.
-function! AltCommand(path, vim_command)
-  let l:alternate = system("alt " . a:path)
-  if empty(l:alternate)
-    echo "No alternate file for " . a:path . " exists!"
-  else
-    exec a:vim_command . " " . l:alternate
-  endif
-endfunction
-
-" Find the alternate file for the current path and open it
-nnoremap <leader>. :w<cr>:call AltCommand(expand('%'), ':e')<cr>
+" let g:netrw_banner = 0
 
 " ----------------------------------------------
 " Misc Preferences
 " ----------------------------------------------
 
-" TextEdit might fail if hidden is not set.
+" allow backspacing over everything in insert mode
+" set backspace=indent,eol,start
+
+" disable auto folding when opening a buffer
+" set nofoldenable
+
+" show matching bracket when in insert mode
+set showmatch
+
+" keep abandoned unsaved buffers open in background
 set hidden
+
+" disable wrapping of text, just move editor over when cursor moves over
+set nowrap
 
 " Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
+set noswapfile
 
 " Give more space for displaying messages.
 set cmdheight=2
+
+" Search
+set nohlsearch
+set incsearch
+set ignorecase
+
+" make it so when the cursor is within 8 lines of the edge of the screen it
+" causes the scroll
+set scrolloff=8
+
+
+set signcolumn=yes
+
+set colorcolumn=80
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
@@ -153,17 +123,109 @@ set shortmess+=c
 " diagnostics appear/become resolved.
 set signcolumn=yes
 
+" --------------------------------------------
+" Plugins
+" --------------------------------------------
+
+" :PlugInstall - install
+" :PlugUpdate - update or install
+" :PlugStatus - status of plugins
+
+" Specify a directory for plugins
+call plug#begin('~/.local/share/nvim/plugged')
+" Fuzzy Finder (& interactive global search w/ ripgrep via :Rg)
+Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
+Plug 'lotabout/skim.vim'
+
+" Airline Status
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" Color Schemes
+Plug 'drewtempelmeyer/palenight.vim'
+
+" Git Integration
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+
+" Utilities
+Plug 'tpope/vim-commentary' " make commenting code easier
+Plug 'tpope/vim-surround' " make dealing with surroundings easier
+
+" Global Search
+" Normally I would also include the following. But skim provides interactive
+" ripgrep support so I don't need the following plugin
+" Plug 'jremmen/vim-ripgrep'
+
+" Various Language Support
+
+" Markdown
+Plug 'plasticboy/vim-markdown' " support Markdown syntax
+
+" Slack
+Plug 'uptech/vim-slack-format'
+
+" Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+
+" Plug 'HerringtonDarkholme/yats.vim' " TypeScript syntax REQUIRED for nvim-typescript
+" Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+" Plug 'Shougo/deoplete.nvim'
+" Plug 'Shougo/denite.nvim'
+
+" Plug 'neovim/nvim-lsp'
+" Plug 'neovim/nvim-lspconfig'
+
+" Initialize plugin system
+call plug#end()
+
+" --------------------------------------------
+" Color scheme
+" --------------------------------------------
+set background=dark
+colorscheme palenight
+
+" --------------------------------------------
+" Airline Theme
+" --------------------------------------------
+let g:airline_theme='deus'
+
 " ----------------------------------------------
-" TypeScript Support
+" Fuzzy Finder Configuration
 " ----------------------------------------------
+nnoremap <leader>f :Files<cr>
+nnoremap <leader>b :Buffers<cr>
 
-" mapping for get type of what cursor is on
-nmap <leader>gt :TSType<CR>
+" ----------------------------------------------
+" Alternate File Switching
+" ----------------------------------------------
+" Run a given vim command on the results of alt from a given path.
+" See usage below.
+function! AltCommand(path, vim_command)
+  let l:alternate = system("alt " . a:path)
+  if empty(l:alternate)
+    echo "No alternate file for " . a:path . " exists!"
+  else
+    exec a:vim_command . " " . l:alternate
+  endif
+endfunction
 
-" mapping for get definition of what cursor is on in a preview
-nmap <leader>gd :TSDefPreview<CR>
+" Find the alternate file for the current path and open it
+nnoremap <leader>. :w<CR>:call AltCommand(expand('%'), ':e')<CR>
 
-autocmd FileType typescript setlocal formatprg=prettier\ --parser\ typescript
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" RENAME CURRENT FILE
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! RenameFile()
+    let old_name = expand('%')
+    let new_name = input('New file name: ', expand('%'), 'file')
+    if new_name != '' && new_name != old_name
+        exec ':saveas ' . new_name
+        exec ':silent !rm ' . old_name
+        redraw!
+    endif
+endfunction
+
+nnoremap <leader>n :call RenameFile()<cr>
 
 " ----------------------------------------------
 " Markdown Support
@@ -180,6 +242,23 @@ let g:vim_markdown_frontmatter = 1 " for YAML format
 let g:vim_markdown_toml_frontmatter = 1 " for TOML format
 let g:vim_markdown_json_frontmatter = 1 " for JSON format
 
-" don't close the preview tab when switching to other buffers
-let g:mkdp_auto_close = 0
+" Open current buffer in Marked 2 for previewing
+nnoremap <leader>m2 :!open -a 'Marked 2' "%"<CR>
 
+" ----------------------------------------------
+" AutoCompletion
+" ----------------------------------------------
+
+" let g:deoplete#enable_at_startup = 1
+
+" ----------------------------------------------
+" TypeScript Support
+" ----------------------------------------------
+
+" mapping for get type of what cursor is on
+" nmap <leader>gt :TSType<CR>
+
+" mapping for get definition of what cursor is on in a preview
+" nmap <leader>gd :TSDefPreview<CR>
+
+" autocmd FileType typescript setlocal formatprg=prettier\ --parser\ typescript
