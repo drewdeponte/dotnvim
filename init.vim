@@ -171,18 +171,75 @@ Plug 'plasticboy/vim-markdown' " support Markdown syntax
 " Slack
 Plug 'uptech/vim-slack-format'
 
-" Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+" JavaScript
+Plug 'pangloss/vim-javascript' " JavaScript support
 
-" Plug 'HerringtonDarkholme/yats.vim' " TypeScript syntax REQUIRED for nvim-typescript
-" Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
-" Plug 'Shougo/deoplete.nvim'
-" Plug 'Shougo/denite.nvim'
+" TypeScript
+Plug 'leafgarland/typescript-vim' " TypeScript syntax
 
-" Plug 'neovim/nvim-lsp'
-" Plug 'neovim/nvim-lspconfig'
+" GraphQL
+Plug 'jparise/vim-graphql' " GrahpQL syntax in gql template strings
+
+" React - JSX & TSX
+" Plug 'mamellon/vim-jsx-typescript' " JSX syntax
+Plug 'peitalin/vim-jsx-typescript' " TSX syntax
+
+
+" Completion
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+let g:coc_global_extensions = [
+	\ 'coc-tsserver',
+	\ 'coc-lists'
+	\ ]
+
+if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
+  let g:coc_global_extensions += ['coc-prettier']
+endif
+
+if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
+  let g:coc_global_extensions += ['coc-eslint']
+end
 
 " Initialize plugin system
 call plug#end()
+
+
+" --------------------------------------------
+" CoC Mappings
+" --------------------------------------------
+nnoremap <silent> K :call CocAction('doHover')<CR>
+" jump to def
+nmap <silent> gd <Plug>(coc-definition)
+" jump to type def
+nmap <silent> gy <Plug>(coc-type-defintion)
+" get references
+nmap <silent> gr <Plug>(coc-references)
+
+" jump between prev & next diagnostic error
+nmap <silent>[g <Plug>(coc-diagnostic-prev)
+nmap <silent>]g <Plug>(coc-diagnostic-next)
+
+" quickfix list for diagnostic errors and symbols
+nnoremap <silent> <leader>d :<C-u>CocList diagnostics<CR>
+nnoremap <silent> <leader>s :<C-u>CocList -I symbols<cr>
+
+" code fixing
+nmap <leader>c <Plug>(coc-codeaction)
+" intelligent symbol renaming
+nmap <leader>rn <Plug>(coc-rename)
+
+" function! ShowDocIfNoDiagnostic(timer_id)
+"   if (coc#util#has_float() == 0)
+"     silent call CocActionAsync('doHover')
+"   endif
+" endfunction
+
+" function! s:show_hover_doc()
+"   call timer_start(500, 'ShowDocIfNoDiagnostic')
+" endfunction
+
+" autocmd CursorHoldI * :call <SID>show_hover_doc()
+" autocmd CursorHold * :call <SID>show_hover_doc()
 
 " --------------------------------------------
 " Color scheme
@@ -250,21 +307,3 @@ let g:vim_markdown_json_frontmatter = 1 " for JSON format
 
 " Open current buffer in Marked 2 for previewing
 nnoremap <leader>mp :!open -a 'Marked 2' "%"<CR>
-
-" ----------------------------------------------
-" AutoCompletion
-" ----------------------------------------------
-
-" let g:deoplete#enable_at_startup = 1
-
-" ----------------------------------------------
-" TypeScript Support
-" ----------------------------------------------
-
-" mapping for get type of what cursor is on
-" nmap <leader>gt :TSType<CR>
-
-" mapping for get definition of what cursor is on in a preview
-" nmap <leader>gd :TSDefPreview<CR>
-
-" autocmd FileType typescript setlocal formatprg=prettier\ --parser\ typescript
