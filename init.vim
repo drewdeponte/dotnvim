@@ -36,6 +36,12 @@ set softtabstop=0
 " 'shiftwidth' is only used for shifting text left or right.
 set nosmarttab
 
+" Enable soft word wrapping for markdown files. I do this because dealing with
+" diffs of non-code (words) when they have hard line breaks is difficult in
+" reviews. Having them be single long lines makes dealing with diffs much
+" easier.
+au FileType markdown setlocal wrap linebreak nolist
+
 au FileType markdown setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=0 nosmarttab
 au FileType tf setlocal expandtab tabstop=4 shiftwidth=2 softtabstop=0 smarttab
 au FileType javascript setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=0 smarttab
@@ -243,7 +249,7 @@ let g:vim_markdown_toml_frontmatter = 1 " for TOML format
 let g:vim_markdown_json_frontmatter = 1 " for JSON format
 
 " Open current buffer in Marked 2 for previewing
-nnoremap <leader>m2 :!open -a 'Marked 2' "%"<CR>
+nnoremap <leader>mp :!open -a 'Marked 2' "%"<CR>
 
 " ----------------------------------------------
 " AutoCompletion
