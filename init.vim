@@ -129,6 +129,9 @@ set shortmess+=c
 " diagnostics appear/become resolved.
 set signcolumn=yes
 
+" I like to use Ctrl-C for esc
+imap <c-c> <esc>
+
 " --------------------------------------------
 " Plugins
 " --------------------------------------------
