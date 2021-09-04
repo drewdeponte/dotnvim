@@ -113,9 +113,6 @@ set ignorecase
 " causes the scroll
 set scrolloff=8
 
-
-set signcolumn=yes
-
 set colorcolumn=80
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
@@ -123,7 +120,7 @@ set colorcolumn=80
 set updatetime=300
 
 " Don't pass messages to |ins-completion-menu|.
-set shortmess+=c
+" set shortmess+=c
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
@@ -180,6 +177,9 @@ Plug 'pangloss/vim-javascript' " JavaScript support
 " TypeScript
 Plug 'leafgarland/typescript-vim' " TypeScript syntax
 
+" Dart
+Plug 'dart-lang/dart-vim-plugin' " Dart syntax
+
 " GraphQL
 Plug 'jparise/vim-graphql' " GrahpQL syntax in gql template strings
 
@@ -187,62 +187,58 @@ Plug 'jparise/vim-graphql' " GrahpQL syntax in gql template strings
 " Plug 'mamellon/vim-jsx-typescript' " JSX syntax
 Plug 'peitalin/vim-jsx-typescript' " TSX syntax
 
-
-" Completion
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-let g:coc_global_extensions = [
-	\ 'coc-tsserver',
-	\ 'coc-lists'
-	\ ]
-
-if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
-  let g:coc_global_extensions += ['coc-prettier']
-endif
-
-if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
-  let g:coc_global_extensions += ['coc-eslint']
-end
+Plug 'neovim/nvim-lspconfig'
 
 " Initialize plugin system
 call plug#end()
 
+lua << EOF
+local nvim_lsp = require('lspconfig')
 
-" --------------------------------------------
-" CoC Mappings
-" --------------------------------------------
-nnoremap <silent> K :call CocAction('doHover')<CR>
-" jump to def
-nmap <silent> gd <Plug>(coc-definition)
-" jump to type def
-nmap <silent> gy <Plug>(coc-type-defintion)
-" get references
-nmap <silent> gr <Plug>(coc-references)
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-" jump between prev & next diagnostic error
-nmap <silent>[g <Plug>(coc-diagnostic-prev)
-nmap <silent>]g <Plug>(coc-diagnostic-next)
+  -- Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-" quickfix list for diagnostic errors and symbols
-nnoremap <silent> <leader>d :<C-u>CocList diagnostics<CR>
-nnoremap <silent> <leader>s :<C-u>CocList -I symbols<cr>
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
 
-" code fixing
-nmap <leader>c <Plug>(coc-codeaction)
-" intelligent symbol renaming
-nmap <leader>rn <Plug>(coc-rename)
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+end
 
-" function! ShowDocIfNoDiagnostic(timer_id)
-"   if (coc#util#has_float() == 0)
-"     silent call CocActionAsync('doHover')
-"   endif
-" endfunction
-
-" function! s:show_hover_doc()
-"   call timer_start(500, 'ShowDocIfNoDiagnostic')
-" endfunction
-
-" autocmd CursorHoldI * :call <SID>show_hover_doc()
-" autocmd CursorHold * :call <SID>show_hover_doc()
+-- Use a loop to conveniently call 'setup' on multiple servers and
+-- map buffer local keybindings when the language server attaches
+local servers = { 'tsserver', 'clojure_lsp', 'rust_analyzer', 'sourcekit', 'pyright', 'vimls', 'dockerls', 'terraformls', 'graphql' }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup {
+    on_attach = on_attach,
+    flags = {
+      debounce_text_changes = 150,
+    }
+  }
+end
+EOF
 
 " --------------------------------------------
 " Color scheme
