@@ -180,6 +180,8 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'nvim-treesitter/playground'
 
+Plug 'simrat39/rust-tools.nvim'
+
 " Initialize plugin system
 call plug#end()
 
@@ -221,7 +223,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'tsserver', 'clojure_lsp', 'rust_analyzer', 'sourcekit', 'pyright', 'vimls', 'dockerls', 'terraformls', 'graphql' }
+local servers = { 'tsserver', 'clojure_lsp', 'sourcekit', 'pyright', 'vimls', 'dockerls', 'terraformls', 'graphql' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -382,6 +384,8 @@ lua <<EOF
 			"typescriptreact"
 		},
 	}
+
+	require('rust-tools').setup({})
 EOF
 
 
