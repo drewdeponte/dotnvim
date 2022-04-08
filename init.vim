@@ -65,7 +65,8 @@ set noswapfile
 set cmdheight=2
 
 " Search
-set nohlsearch
+" set nohlsearch
+set hlsearch
 set incsearch
 set ignorecase
 
@@ -85,6 +86,16 @@ set updatetime=300
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
 set signcolumn=yes
+
+" Set completeopt to have a better completion experience
+" :help completeopt
+" menuone: popup even when there's only one match
+" noinsert: Do not insert text until a selection is made
+" noselect: Do not select, force user to select one from the menu
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing extra messages when using completion
+set shortmess+=c
 
 " I like to use Ctrl-C for esc
 imap <c-c> <esc>
@@ -153,18 +164,10 @@ Plug 'hashivim/vim-terraform'
 " Plug 'mamellon/vim-jsx-typescript' " JSX syntax
 Plug 'peitalin/vim-jsx-typescript' " TSX syntax
 
-Plug 'jebberjeb/clojure-socketrepl.nvim'
+" Clojure - sockect repl
+" Plug 'jebberjeb/clojure-socketrepl.nvim'
 
 
-" Completion
-Plug 'hrsh7th/cmp-nvim-lsp', { 'branch': 'main' }
-Plug 'hrsh7th/cmp-buffer', { 'branch': 'main' }
-Plug 'hrsh7th/cmp-path', { 'branch': 'main' }
-Plug 'hrsh7th/cmp-cmdline', { 'branch': 'main' }
-Plug 'hrsh7th/nvim-cmp', { 'branch': 'main' }
-
-Plug 'hrsh7th/cmp-vsnip', { 'branch': 'main' }
-Plug 'hrsh7th/vim-vsnip', { 'branch': 'master' }
 
 " Plug 'Olical/conjure', {'tag': 'v4.23.0'}
 " Plug 'tpope/vim-dispatch'
@@ -172,8 +175,6 @@ Plug 'hrsh7th/vim-vsnip', { 'branch': 'master' }
 " " Only in Neovim:
 " Plug 'radenling/vim-dispatch-neovim'
 
-" Formatting Engine
-Plug 'sbdchd/neoformat'
 
 augroup fmt
   autocmd!
@@ -185,7 +186,25 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'nvim-treesitter/playground'
 
+" Completion
+Plug 'hrsh7th/nvim-cmp', { 'branch': 'main' }
+Plug 'hrsh7th/cmp-nvim-lsp', { 'branch': 'main' }
+Plug 'hrsh7th/cmp-buffer', { 'branch': 'main' }
+Plug 'hrsh7th/cmp-path', { 'branch': 'main' }
+Plug 'hrsh7th/cmp-cmdline', { 'branch': 'main' }
+
+Plug 'hrsh7th/cmp-vsnip', { 'branch': 'main' }
+
+" To enable more of the features of rust-analyzer, such as inlay hints and
+" more
 Plug 'simrat39/rust-tools.nvim'
+
+" Snippet engine
+Plug 'hrsh7th/vim-vsnip', { 'branch': 'master' }
+
+" Formatting Engine
+Plug 'sbdchd/neoformat'
+
 
 " Initialize plugin system
 call plug#end()
@@ -238,7 +257,37 @@ for _, lsp in ipairs(servers) do
   }
 end
 
-require('rust-tools').setup({})
+local rust_opts = {
+    tools = { -- rust-tools options
+        autoSetHints = true,
+        hover_with_actions = true,
+        inlay_hints = {
+            show_parameter_hints = false,
+            parameter_hints_prefix = "",
+            other_hints_prefix = "",
+        },
+    },
+
+    -- all the opts to send to nvim-lspconfig
+    -- these override the defaults set by rust-tools.nvim
+    -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
+    server = {
+        -- on_attach is a callback called when the language server attachs to the buffer
+        -- on_attach = on_attach,
+        settings = {
+            -- to enable rust-analyzer settings visit:
+            -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+            ["rust-analyzer"] = {
+                -- enable clippy on save
+                checkOnSave = {
+                    command = "clippy"
+                },
+            }
+        }
+    },
+}
+
+require('rust-tools').setup(rust_opts)
 
 nvim_lsp.ccls.setup {
   init_options = {
@@ -281,11 +330,16 @@ lua <<EOF
       end
     },
     mapping = {
+      ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+      ['<Tab>'] = cmp.mapping.select_next_item(),
       ['<C-d>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
       ['<C-Space>'] = cmp.mapping.complete(),
       ['<C-e>'] = cmp.mapping.close(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+      ['<CR>'] = cmp.mapping.confirm({
+        behavior = cmp.ConfirmBehavior.Insert,
+        select = true
+      }),
     },
     sources = {
       { name = 'nvim_lsp' },
