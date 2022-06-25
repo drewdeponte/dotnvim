@@ -167,7 +167,8 @@ Plug 'peitalin/vim-jsx-typescript' " TSX syntax
 " Clojure - sockect repl
 " Plug 'jebberjeb/clojure-socketrepl.nvim'
 
-
+" Rust
+Plug 'rust-lang/rust.vim'
 
 " Plug 'Olical/conjure', {'tag': 'v4.23.0'}
 " Plug 'tpope/vim-dispatch'
