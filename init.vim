@@ -589,5 +589,6 @@ au FileType tf setlocal expandtab tabstop=4 shiftwidth=2 softtabstop=0 smarttab
 au FileType ts setlocal expandtab tabstop=4 shiftwidth=2 softtabstop=0 smarttab
 au FileType javascript setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=0 smarttab
 au FileType htmldjango setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=0 smarttab
-au FileType html setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=0 smarttab
+au FileType html setlocal expandtab tabstop=4 shiftwidth=2 softtabstop=0 smarttab
 au FileType rust setlocal expandtab tabstop=4 shiftwidth=2 softtabstop=0 smarttab textwidth=78
+au FileType nroff setlocal expandtab tabstop=4 shiftwidth=2 softtabstop=0 smarttab textwidth=78
