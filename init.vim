@@ -160,6 +160,9 @@ Plug 'jparise/vim-graphql' " GrahpQL syntax in gql template strings
 " Terraform
 Plug 'hashivim/vim-terraform'
 
+" Prisma - file detection and syntax highlighting
+Plug 'pantharshit00/vim-prisma'
+
 " React - JSX & TSX
 " Plug 'mamellon/vim-jsx-typescript' " JSX syntax
 Plug 'peitalin/vim-jsx-typescript' " TSX syntax
