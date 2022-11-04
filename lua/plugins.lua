@@ -1,4 +1,3 @@
-
 -- --------------------------------------------
 -- Plugins
 -- --------------------------------------------
@@ -81,24 +80,28 @@ Plug 'pantharshit00/vim-prisma'
 
 Plug 'neovim/nvim-lspconfig'
 
-Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})  -- We recommend updating the parsers on update
+Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' }) -- We recommend updating the parsers on update
 Plug 'nvim-treesitter/playground'
 
 -- Completion
-Plug('hrsh7th/nvim-cmp', {branch = 'main'})
-Plug('hrsh7th/cmp-nvim-lsp', {branch = 'main'})
-Plug('hrsh7th/cmp-buffer', {branch = 'main'})
-Plug('hrsh7th/cmp-path', {branch = 'main'})
-Plug('hrsh7th/cmp-cmdline', {branch = 'main'})
+Plug('hrsh7th/nvim-cmp', { branch = 'main' })
+Plug('hrsh7th/cmp-nvim-lua', { branch = 'main' })
+Plug('hrsh7th/cmp-nvim-lsp', { branch = 'main' })
+Plug('hrsh7th/cmp-buffer', { branch = 'main' })
+Plug('hrsh7th/cmp-path', { branch = 'main' })
+Plug('hrsh7th/cmp-cmdline', { branch = 'main' })
 
-Plug('hrsh7th/cmp-vsnip', {branch = 'main'})
+Plug('onsails/lspkind.nvim')
+
+Plug('hrsh7th/cmp-vsnip', { branch = 'main' })
+
 
 -- To enable more of the features of rust-analyzer, such as inlay hints and
 -- more
 Plug 'simrat39/rust-tools.nvim'
 
 -- Snippet engine
-Plug('hrsh7th/vim-vsnip', {branch = 'master'})
+Plug('hrsh7th/vim-vsnip', { branch = 'master' })
 
 -- Formatting Engine
 Plug 'sbdchd/neoformat'
@@ -108,7 +111,7 @@ Plug 'farmergreg/vim-lastplace'
 Plug 'github/copilot.vim'
 
 
-Plug('joshdick/onedark.vim', {branch = 'main'})
+Plug('joshdick/onedark.vim', { branch = 'main' })
 
 -- Initialize plugin system
 vim.call('plug#end')
