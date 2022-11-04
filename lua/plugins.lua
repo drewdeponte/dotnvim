@@ -103,6 +103,7 @@ Plug('hrsh7th/vim-vsnip', {branch = 'master'})
 -- Formatting Engine
 Plug 'sbdchd/neoformat'
 
+Plug 'farmergreg/vim-lastplace'
 
 Plug('joshdick/onedark.vim', {branch = 'main'})
 
