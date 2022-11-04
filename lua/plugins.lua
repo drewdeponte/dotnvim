@@ -105,6 +105,9 @@ Plug 'sbdchd/neoformat'
 
 Plug 'farmergreg/vim-lastplace'
 
+Plug 'github/copilot.vim'
+
+
 Plug('joshdick/onedark.vim', {branch = 'main'})
 
 -- Initialize plugin system
