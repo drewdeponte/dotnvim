@@ -46,7 +46,7 @@ end
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local servers = { 'tsserver', 'clojure_lsp', 'sourcekit', 'pyright', 'vimls', 'dockerls', 'terraformls', 'graphql',
-  'dartls', 'sumneko_lua' }
+  'dartls', 'lua_ls' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -67,7 +67,6 @@ local rust_opts = {
       other_hints_prefix = "",
     },
   },
-
   -- all the opts to send to nvim-lspconfig
   -- these override the defaults set by rust-tools.nvim
   -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
@@ -91,13 +90,13 @@ require('rust-tools').setup(rust_opts)
 
 nvim_lsp.ccls.setup {
   init_options = {
-    compilationDatabaseDirectory = "build";
+    compilationDatabaseDirectory = "build",
     index = {
-      threads = 0;
-    };
+      threads = 0,
+    },
     clang = {
-      excludeArgs = { "-frounding-math" };
-    };
+      excludeArgs = { "-frounding-math" },
+    },
   }
 }
 
