@@ -100,6 +100,17 @@ nvim_lsp.ccls.setup {
   }
 }
 
+nvim_lsp.ltex.setup {
+  on_attach = on_attach,
+  settings = {
+    ltex = {
+      additionalRules = {
+        languageModel = '~/ngrams/',
+      }
+    }
+  }
+}
+
 -- Configure JavaScript/TypeScript, etc.
 local function eslint_config_exists()
   local eslintrc = vim.fn.glob(".eslintrc*", 0, 1)
