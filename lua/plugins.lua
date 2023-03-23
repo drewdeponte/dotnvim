@@ -113,6 +113,8 @@ Plug 'github/copilot.vim'
 
 Plug('joshdick/onedark.vim', { branch = 'main' })
 
+Plug 'folke/trouble.nvim'
+
 -- Initialize plugin system
 vim.call('plug#end')
 
