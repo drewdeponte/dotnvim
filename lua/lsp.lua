@@ -105,6 +105,8 @@ nvim_lsp.ltex.setup {
   on_attach = on_attach,
   settings = {
     ltex = {
+      language = "en-US",
+      dictionary = { ['en-US'] = { "NotaCode", "Pullwalla", "Gumleaf", "Manuform", "qmk", "dottmux", "dotnvim", "Uptech", "drewdeponte", "Alacritty", "neovim" } },
       additionalRules = {
         languageModel = '~/ngrams/',
       }
