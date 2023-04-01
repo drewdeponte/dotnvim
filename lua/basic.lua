@@ -1,6 +1,6 @@
 ---------- HELPERS ----------
-local opt = vim.opt 	-- to set options
-local g = vim.g 			-- a table to access global variables
+local opt = vim.opt -- to set options
+local g = vim.g -- a table to access global variables
 local cmd = vim.cmd
 
 -- Leave eol of source files alone
@@ -9,11 +9,11 @@ opt.fixendofline = false
 -- --------------------------------------------
 -- Color scheme
 -- --------------------------------------------
-g.airline_theme = 'onedark'
 opt.termguicolors = true
 opt.background = 'dark'
--- cmd('colorscheme palenight')
-cmd('colorscheme onedark')
+g.sonokai_style = 'andromeda'
+g.airline_theme = 'sonokai'
+cmd('colorscheme sonokai')
 
 -- ----------------------------------------------
 -- Line Numbering
@@ -82,11 +82,6 @@ opt.completeopt = { 'menuone', 'noinsert', 'noselect' }
 
 -- Avoid showing extra messages when using completion
 -- set shortmess+=c
-
--- --------------------------------------------
--- Airline Theme
--- --------------------------------------------
-g.airline_theme = 'deus'
 
 -- --------------------------------------------
 -- Configuration around Tabs, Indentation, Etc.

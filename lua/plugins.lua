@@ -82,6 +82,7 @@ Plug 'neovim/nvim-lspconfig'
 
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' }) -- We recommend updating the parsers on update
 Plug 'nvim-treesitter/playground'
+Plug 'nvim-treesitter/nvim-treesitter-context'
 
 -- Completion
 Plug('hrsh7th/nvim-cmp', { branch = 'main' })
@@ -112,6 +113,7 @@ Plug 'github/copilot.vim'
 
 
 Plug('joshdick/onedark.vim', { branch = 'main' })
+Plug('sainnhe/sonokai', { branch = 'master' })
 
 -- Initialize plugin system
 vim.call('plug#end')
