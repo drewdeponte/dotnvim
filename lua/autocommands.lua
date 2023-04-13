@@ -21,3 +21,10 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = '*',
   command = 'lua vim.lsp.buf.format()'
 })
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'dart' },
+  group = file_type_group,
+  callback = function(_)
+    vim.keymap.set('n', '<leader>t', '<cmd>!fvm flutter test "%"<CR>')
+  end
+})
