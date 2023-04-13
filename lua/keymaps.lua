@@ -13,22 +13,22 @@ vim.keymap.set('n', '<leader>h', '<cmd>lua require(\'telescope.builtin\').help_t
 -- Alt
 -- ----------------------------------------------
 function alt_handler(current_file_path, alternate_file_path)
-	vim.cmd('w')
-	vim.cmd('e ' .. alternate_file_path)
+  vim.cmd('w')
+  vim.cmd('e ' .. alternate_file_path)
 end
 
 vim.keymap.set('n', '<leader>.', function()
-		alt_command(vim.fn.expand('%'), alt_handler)
-	end)
+  alt_command(vim.fn.expand('%'), alt_handler)
+end)
 
 -- ----------------------------------------------
 -- Rename Current File
 -- ----------------------------------------------
 vim.keymap.set('n', '<leader>n', function()
-	local old_name = vim.fn.expand('%')
-	local new_name = vim.fn.input('New file name: ', vim.fn.expand('%'), 'file')
-	rename(old_name, new_name)
-	end)
+  local old_name = vim.fn.expand('%')
+  local new_name = vim.fn.input('New file name: ', vim.fn.expand('%'), 'file')
+  rename(old_name, new_name)
+end)
 
 -- Open current buffer in Marked 2 for previewing
 vim.keymap.set('n', '<leader>mp', '<cmd>!open -a \'Marked 2\' "%"<CR>')
