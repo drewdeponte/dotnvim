@@ -94,15 +94,14 @@ Plug('hrsh7th/cmp-cmdline', { branch = 'main' })
 
 Plug('onsails/lspkind.nvim')
 
-Plug('hrsh7th/cmp-vsnip', { branch = 'main' })
-
+Plug('L3MON4D3/LuaSnip', { branch = 'master' })
+Plug('saadparwaiz1/cmp_luasnip')
 
 -- To enable more of the features of rust-analyzer, such as inlay hints and
 -- more
 Plug 'simrat39/rust-tools.nvim'
 
 -- Snippet engine
-Plug('hrsh7th/vim-vsnip', { branch = 'master' })
 
 -- Formatting Engine
 Plug 'sbdchd/neoformat'

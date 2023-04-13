@@ -8,7 +8,7 @@ cmp.setup({
   mapping = {
     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
     ['<Tab>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-d>'] = cmp.mapping.scroll_docs( -4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
@@ -20,9 +20,9 @@ cmp.setup({
   sources = {
     { name = 'nvim_lua' },
     { name = 'nvim_lsp' },
-    { name = 'vsnip' },
+    { name = 'luasnip' },
     { name = 'path' },
-    { name = 'buffer', keyword_length = 5 },
+    { name = 'buffer',  keyword_length = 5 },
   },
   formatting = {
     format = lspkind.cmp_format({
@@ -38,7 +38,7 @@ cmp.setup({
   },
   snippet = {
     expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body)
+      require('luasnip').lsp_expand(args.body)
     end
   },
 })
