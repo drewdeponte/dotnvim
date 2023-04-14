@@ -114,6 +114,8 @@ Plug 'github/copilot.vim'
 Plug('joshdick/onedark.vim', { branch = 'main' })
 Plug('sainnhe/sonokai', { branch = 'master' })
 
+Plug('kevinhwang91/nvim-bqf')
+
 -- Initialize plugin system
 vim.call('plug#end')
 
