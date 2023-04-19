@@ -113,19 +113,9 @@ ls.add_snippets("dart", {
 
   s({ trig = "ffc", dscr = "Expands 'ffc' into Flutter Forge Component starter" },
     fmt([[
-    class {widgetName} extends ComponentWidget<{widgetStateTypePrefix}State, {widgetEnvironmentTypePrefix}Environment, {widgetActionTypePrefix}Action> {{
-      {widgetConstructor}({{super.key, super.store}});
-
-      @override
-      Widget build(context, viewStore) {{
-        return Rebuilder(
-          store: store,
-          builder: (context, state, child) {{
-            return const Text('some text');
-          }}
-        );
-      }}
-    }}
+    import 'package:flutter/material.dart';
+    import 'package:flutter_forge/flutter_forge.dart';
+    import 'package:equatable/equatable.dart';
 
     @immutable
     class {stateClassNamePrefix}State extends Equatable {{
@@ -146,6 +136,20 @@ ls.add_snippets("dart", {
         return ReducerTuple(state, []);
       }}
     );
+
+    class {widgetName} extends ComponentWidget<{widgetStateTypePrefix}State, {widgetEnvironmentTypePrefix}Environment, {widgetActionTypePrefix}Action> {{
+      const {widgetConstructor}({{super.key, required super.store}});
+
+      @override
+      Widget build(context, viewStore) {{
+        return Rebuilder(
+          store: store,
+          builder: (context, state, child) {{
+            return const Text('some text');
+          }}
+        );
+      }}
+    }}
     ]], {
       widgetName = i(1, "SomeWidget"),
       widgetStateTypePrefix = rep(1),
@@ -210,15 +214,6 @@ ls.add_snippets("dart", {
     void main() {{
       testWidgets('{testSummary}', (WidgetTester tester) async {{
         await tester.pumpWidget(MaterialApp(home: {widgetInstance}));
-
-        expect(find.text('0'), findsOneWidget);
-        expect(find.text('1'), findsNothing);
-
-        await tester.tap(find.text('somebutton'));
-        await tester.pump();
-
-        expect(find.text('0'), findsNothing);
-        expect(find.text('1'), findsOneWidget);
       }});
     }}
     ]], { testSummary = i(1, "test summary"), widgetInstance = i(2, "SomeWidget()") })
@@ -228,15 +223,6 @@ ls.add_snippets("dart", {
     fmt([[
     testWidgets('{testSummary}', (WidgetTester tester) async {{
       await tester.pumpWidget(MaterialApp(home: {widgetInstance}));
-
-      expect(find.text('0'), findsOneWidget);
-      expect(find.text('1'), findsNothing);
-
-      await tester.tap(find.text('somebutton'));
-      await tester.pump();
-
-      expect(find.text('0'), findsNothing);
-      expect(find.text('1'), findsOneWidget);
     }});
     ]], { testSummary = i(1, "test summary"), widgetInstance = i(2, "SomeWidget()") })
   ),
