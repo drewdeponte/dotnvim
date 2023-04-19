@@ -26,6 +26,9 @@ opt.relativenumber = true
 -- Min number of characters to use for line number column
 opt.numberwidth = 5
 
+opt.splitright = true
+opt.splitbelow = true
+
 -- ----------------------------------------------
 -- Leader Key
 -- ----------------------------------------------
