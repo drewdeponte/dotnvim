@@ -116,6 +116,8 @@ Plug('sainnhe/sonokai', { branch = 'master' })
 
 Plug('kevinhwang91/nvim-bqf')
 
+Plug('vim-test/vim-test')
+
 -- Initialize plugin system
 vim.call('plug#end')
 
