@@ -57,6 +57,15 @@ ls.add_snippets("lua", {
   }),
 })
 
+ls.add_snippets("gitcommit", {
+  s({ trig = "sic", dscr = "skip ticket ID check" }, {
+    t("skip_ticket_id_check")
+  }),
+  s({ trig = "sct", dscr = "skip test coverage check" }, {
+    t("skip_test_coverage_check")
+  }),
+})
+
 -- TODO: add snippet for Riverpod consumerwidget
 --
 -- TODO: add snippet to get setup with flutter forge tests quickly
