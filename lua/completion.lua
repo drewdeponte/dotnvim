@@ -1,8 +1,16 @@
 -- ----------------------------------------------
 -- Completion - completion with cmp
 -- ----------------------------------------------
+
 local cmp = require('cmp')
 local lspkind = require('lspkind')
+
+require('copilot').setup({
+  suggestion = { enabled = false },
+  panel = { enabled = false },
+})
+
+require('copilot_cmp').setup()
 
 cmp.setup({
   mapping = {
@@ -18,11 +26,12 @@ cmp.setup({
     }),
   },
   sources = {
-    { name = 'nvim_lua' },
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-    { name = 'path' },
-    { name = 'buffer',  keyword_length = 5 },
+    { name = 'copilot',  group_index = 2 },
+    { name = 'nvim_lua', group_index = 2 },
+    { name = 'nvim_lsp', group_index = 2 },
+    { name = 'luasnip',  group_index = 2 },
+    { name = 'path',     group_index = 2 },
+    { name = 'buffer',   keyword_length = 5 },
   },
   formatting = {
     format = lspkind.cmp_format({
@@ -32,7 +41,8 @@ cmp.setup({
         nvim_lsp = "[LSP]",
         nvim_lua = "[api]",
         path = "[path]",
-        vsnip = "[snip]"
+        vsnip = "[snip]",
+        copilot = "[copi]"
       }
     })
   },

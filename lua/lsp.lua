@@ -50,7 +50,7 @@ end
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local servers = { 'tsserver', 'clojure_lsp', 'sourcekit', 'pyright', 'vimls', 'dockerls', 'terraformls', 'graphql',
-  'dartls', 'lua_ls' }
+  'dartls', 'lua_ls', 'kotlin_language_server' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -109,7 +109,7 @@ nvim_lsp.ltex.setup {
   settings = {
     ltex = {
       language = "en-US",
-      dictionary = { ['en-US'] = { "NotaCode", "Pullwalla", "Gumleaf", "Manuform", "qmk", "dottmux", "dotnvim", "Uptech", "drewdeponte", "Alacritty", "neovim" } },
+      dictionary = { ['en-US'] = { "NotaCode", "Pullwalla", "Gumleaf", "Manuform", "qmk", "dottmux", "dotnvim", "Uptech", "drewdeponte", "Alacritty", "neovim", "mockist", "mockists" } },
       additionalRules = {
         languageModel = '~/ngrams/',
       }

@@ -97,6 +97,10 @@ Plug('onsails/lspkind.nvim')
 Plug('L3MON4D3/LuaSnip', { branch = 'master' })
 Plug('saadparwaiz1/cmp_luasnip')
 
+-- Plug 'github/copilot.vim'
+Plug 'zbirenbaum/copilot.lua'
+Plug 'zbirenbaum/copilot-cmp'
+
 -- To enable more of the features of rust-analyzer, such as inlay hints and
 -- more
 Plug 'simrat39/rust-tools.nvim'
@@ -107,9 +111,6 @@ Plug 'simrat39/rust-tools.nvim'
 Plug 'sbdchd/neoformat'
 
 Plug 'farmergreg/vim-lastplace'
-
-Plug 'github/copilot.vim'
-
 
 Plug('joshdick/onedark.vim', { branch = 'main' })
 Plug('sainnhe/sonokai', { branch = 'master' })
