@@ -81,6 +81,7 @@ Plug 'pantharshit00/vim-prisma'
 Plug 'neovim/nvim-lspconfig'
 
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' }) -- We recommend updating the parsers on update
+-- Plug('nvim-treesitter', { branch = 'master', commit = 'f2778bd1a28b74adf5b1aa51aa57da85adfa3d16' })
 Plug 'nvim-treesitter/playground'
 Plug 'nvim-treesitter/nvim-treesitter-context'
 
