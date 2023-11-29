@@ -61,6 +61,15 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+-- nvim_lsp.eslint.setup({
+--   on_attach = function(client, bufnr)
+--     vim.api.nvim_create_autocmd("BufWritePre", {
+--       buffer = bufnr,
+--       command = "EslintFixAll",
+--     })
+--   end,
+-- })
+
 local rust_opts = {
   tools = { -- rust-tools options
     autoSetHints = true,
@@ -118,32 +127,32 @@ nvim_lsp.ltex.setup {
 }
 
 -- Configure JavaScript/TypeScript, etc.
-local function eslint_config_exists()
-  local eslintrc = vim.fn.glob(".eslintrc*", 0, 1)
+-- local function eslint_config_exists()
+--   local eslintrc = vim.fn.glob(".eslintrc*", 0, 1)
 
-  if not vim.tbl_isempty(eslintrc) then
-    return true
-  end
+--   if not vim.tbl_isempty(eslintrc) then
+--     return true
+--   end
 
-  if vim.fn.filereadable("package.json") then
-    if vim.fn.json_decode(vim.fn.readfile("package.json"))["eslintConfig"] then
-      return true
-    end
-  end
+--   if vim.fn.filereadable("package.json") then
+--     if vim.fn.json_decode(vim.fn.readfile("package.json"))["eslintConfig"] then
+--       return true
+--     end
+--   end
 
-  return false
-end
+--   return false
+-- end
 
-local lspconfig = require('lspconfig')
+-- local lspconfig = require('lspconfig')
 
-local eslint = {
-  lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
-  lintStdin = true,
-  lintFormats = { "%f:%l:%c: %m" },
-  lintIgnoreExitCode = true,
-  formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
-  formatStdin = true
-}
+-- local eslint = {
+--   lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
+--   lintStdin = true,
+--   lintFormats = { "%f:%l:%c: %m" },
+--   lintIgnoreExitCode = true,
+--   formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
+--   formatStdin = true
+-- }
 
 local function set_lsp_config(client)
   if client.resolved_capabilities.document_formatting then
