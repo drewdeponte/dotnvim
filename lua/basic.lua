@@ -6,6 +6,9 @@ local cmd = vim.cmd
 -- Leave eol of source files alone
 opt.fixendofline = false
 
+-- Make it so splits don't resize to be equal after closing a split
+opt.equalalways = false
+
 -- --------------------------------------------
 -- Color scheme
 -- --------------------------------------------
