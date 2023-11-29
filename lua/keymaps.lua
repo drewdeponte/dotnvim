@@ -1,6 +1,3 @@
--- I like to use Ctrl-C for esc when in insert mode
-vim.keymap.set('i', '<c-c>', '<esc>')
-
 -- ----------------------------------------------
 -- Fuzzy Finder Configuration
 -- ----------------------------------------------
