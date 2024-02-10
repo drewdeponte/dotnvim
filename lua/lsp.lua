@@ -1,4 +1,4 @@
-local nvim_lsp = require('lspconfig')
+local lspconfig = require('lspconfig')
 
 vim.diagnostic.config({ severity_sort = true })
 
@@ -29,6 +29,8 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>', opts)
+  buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+
 
   buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
@@ -49,10 +51,10 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'tsserver', 'clojure_lsp', 'sourcekit', 'pyright', 'vimls', 'dockerls', 'terraformls', 'graphql',
-  'dartls', 'lua_ls', 'kotlin_language_server' }
+local servers = { 'clojure_lsp', 'pyright', 'vimls', 'dockerls', 'terraformls', 'graphql',
+  'dartls', 'kotlin_language_server', 'jdtls' }
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
+  lspconfig[lsp].setup {
     on_attach = on_attach,
     flags = {
       debounce_text_changes = 150,
@@ -61,16 +63,37 @@ for _, lsp in ipairs(servers) do
   }
 end
 
--- nvim_lsp.eslint.setup({
---   on_attach = function(client, bufnr)
---     vim.api.nvim_create_autocmd("BufWritePre", {
---       buffer = bufnr,
---       command = "EslintFixAll",
---     })
---   end,
--- })
+lspconfig.lua_ls.setup {
+  on_attach = on_attach,
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { 'vim', 'it', 'describe', 'before_each', 'after_each' }
+      }
+    }
+  }
+}
 
-local rust_opts = {
+lspconfig.tsserver.setup {
+  on_attach = function(client, bufnr)
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
+    on_attach(client, bufnr)
+  end,
+}
+
+lspconfig.eslint.setup({
+  settings = {
+    format = false
+  },
+})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = { "*.ts" },
+  command = "EslintFixAll",
+})
+
+require('rust-tools').setup {
   tools = { -- rust-tools options
     autoSetHints = true,
     -- hover_with_actions = true,
@@ -94,14 +117,15 @@ local rust_opts = {
         checkOnSave = {
           command = "clippy"
         },
+        procMacro = {
+          enable = true
+        },
       }
     }
   },
 }
 
-require('rust-tools').setup(rust_opts)
-
-nvim_lsp.ccls.setup {
+lspconfig.ccls.setup {
   init_options = {
     compilationDatabaseDirectory = "build",
     index = {
@@ -113,49 +137,15 @@ nvim_lsp.ccls.setup {
   }
 }
 
-nvim_lsp.ltex.setup {
+lspconfig.ltex.setup {
   on_attach = on_attach,
   settings = {
     ltex = {
       language = "en-US",
-      dictionary = { ['en-US'] = { "NotaCode", "Pullwalla", "Gumleaf", "Manuform", "qmk", "dottmux", "dotnvim", "Uptech", "drewdeponte", "Alacritty", "neovim", "mockist", "mockists" } },
+      dictionary = { ['en-US'] = { "NotaCode", "Pullwalla", "Gumleaf", "Manuform", "qmk", "dottmux", "dotnvim", "Uptech", "drewdeponte", "Alacritty", "neovim", "mockist", "mockists", "Kinesis", "AppFit", "OpenSearch", "Faktory", "Firehose" } },
       additionalRules = {
         languageModel = '~/ngrams/',
       }
     }
   }
 }
-
--- Configure JavaScript/TypeScript, etc.
--- local function eslint_config_exists()
---   local eslintrc = vim.fn.glob(".eslintrc*", 0, 1)
-
---   if not vim.tbl_isempty(eslintrc) then
---     return true
---   end
-
---   if vim.fn.filereadable("package.json") then
---     if vim.fn.json_decode(vim.fn.readfile("package.json"))["eslintConfig"] then
---       return true
---     end
---   end
-
---   return false
--- end
-
--- local lspconfig = require('lspconfig')
-
--- local eslint = {
---   lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
---   lintStdin = true,
---   lintFormats = { "%f:%l:%c: %m" },
---   lintIgnoreExitCode = true,
---   formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
---   formatStdin = true
--- }
-
-local function set_lsp_config(client)
-  if client.resolved_capabilities.document_formatting then
-    vim.cmd [[autocmd! BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 300)]]
-  end
-end

@@ -66,6 +66,21 @@ ls.add_snippets("gitcommit", {
   }),
 })
 
+ls.add_snippets("typescript", {
+  s({ trig = "desc", dscr = "Expands 'desc' into Jest describe block" },
+    fmt([[
+    describe('{description}', () => {{
+    }})
+    ]], { description = i(1, "") })
+  ),
+  s({ trig = "it", dscr = "Expands 'it' into Jest it block" },
+    fmt([[
+    it('{should}', () => {{
+    }})
+    ]], { should = i(1, "should") })
+  ),
+})
+
 -- TODO: add snippet for Riverpod consumerwidget
 --
 -- TODO: add snippet to get setup with flutter forge tests quickly

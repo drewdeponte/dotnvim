@@ -17,6 +17,11 @@ vim.api.nvim_create_autocmd('FileType', {
   group = file_type_group,
   command = 'setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=0 smarttab'
 })
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'kotlin', 'kt' },
+  group = file_type_group,
+  command = 'setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=0 smarttab'
+})
 vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = '*',
   command = 'lua vim.lsp.buf.format()'
