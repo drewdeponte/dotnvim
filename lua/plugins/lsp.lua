@@ -128,7 +128,7 @@ return {
 			settings = {
 				ltex = {
 					language = "en-US",
-					dictionary = { ['en-US'] = { "NotaCode", "Pullwalla", "Gumleaf", "Manuform", "qmk", "dottmux", "dotnvim", "Uptech", "drewdeponte", "Alacritty", "neovim", "mockist", "mockists", "Kinesis", "AppFit", "OpenSearch", "Faktory", "Firehose" } },
+					dictionary = { ['en-US'] = { "NotaCode", "Pullwalla", "Gumleaf", "Manuform", "qmk", "dottmux", "dotnvim", "Uptech", "drewdeponte", "Alacritty", "neovim", "mockist", "mockists", "Kinesis", "AppFit", "OpenSearch", "Faktory", "Firehose", "Deponte" } },
 					additionalRules = {
 						languageModel = '~/ngrams/',
 					}
