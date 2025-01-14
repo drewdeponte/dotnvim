@@ -37,6 +37,10 @@ return {
 			'hrsh7th/cmp-cmdline',
 			branch = 'main'
 		},
+		{
+			'quangnguyen30192/cmp-nvim-tags',
+			branch = 'main'
+		},
 	},
 	config = function()
 		local cmp = require('cmp')
@@ -48,7 +52,7 @@ return {
 			mapping = {
 				['<S-Tab>'] = cmp.mapping.select_prev_item(),
 				['<Tab>'] = cmp.mapping.select_next_item(),
-				['<C-d>'] = cmp.mapping.scroll_docs( -4),
+				['<C-d>'] = cmp.mapping.scroll_docs(-4),
 				['<C-f>'] = cmp.mapping.scroll_docs(4),
 				['<C-Space>'] = cmp.mapping.complete(),
 				['<C-e>'] = cmp.mapping.close(),
@@ -63,12 +67,14 @@ return {
 				{ name = 'nvim_lsp', group_index = 2 },
 				{ name = 'luasnip',  group_index = 2 },
 				{ name = 'path',     group_index = 2 },
-				{ name = 'buffer',   keyword_length = 5 },
+				{ name = 'tags',     group_index = 2 },
+				{ name = 'buffer',   group_index = 5 },
 			},
 			formatting = {
 				format = lspkind.cmp_format({
 					with_text = true,
 					menu = {
+						tags = "[tags]",
 						buffer = "[buf]",
 						nvim_lsp = "[LSP]",
 						nvim_lua = "[api]",
