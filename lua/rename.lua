@@ -1,12 +1,13 @@
 local M = {}
 
--- ----------------------------------------------
--- Rename Current File
--- ----------------------------------------------
-function M.rename(old_name, new_name)
-	if new_name ~= '' and new_name ~= old_name then
-		vim.cmd('saveas ' .. new_name)
-		vim.cmd('silent !rm ' .. old_name)
+function M.rename_word_under_cursor()
+	local word = vim.fn.expand("<cword>")
+	if word and word ~= "" then
+		local cmd = string.format(":%%s/%s/", word)
+		vim.api.nvim_feedkeys(cmd, "n", true)
+		-- vim.cmd(cmd)
+	else
+		print("No word under cursor to rename!")
 	end
 end
 
