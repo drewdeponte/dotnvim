@@ -77,6 +77,10 @@ return {
 			}
 		end
 
+		lspconfig.ruby_lsp.setup {
+			on_attach = on_attach
+		}
+
 		lspconfig.lua_ls.setup {
 			on_attach = on_attach,
 			settings = {
