@@ -143,6 +143,7 @@ vim.cmd('colorscheme sonokai')
 
 -- Open current buffer in Marked 2 for previewing
 vim.keymap.set('n', '<leader>mp', '<cmd>!open -a \'Marked 2\' "%"<CR>')
+vim.keymap.set('n', '<Esc>', ':nohlsearch<CR><Esc>', { noremap = true, silent = true })
 
 -- --------------------------------------------------------------------------
 -- AutoCommands
