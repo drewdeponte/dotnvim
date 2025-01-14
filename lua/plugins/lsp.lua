@@ -88,16 +88,7 @@ return {
 			}
 		}
 
-		lspconfig.tsserver.setup {
-			on_attach = function(client, bufnr)
-				-- these disable LSP formating for this server. This allows me to have
-				-- a global lsp formatter enabled. But also have a secondary formatter
-				-- configured for typescript and javascript, specifically prettier.
-				client.server_capabilities.documentFormattingProvider = false
-				client.server_capabilities.documentRangeFormattingProvider = false
-				on_attach(client, bufnr)
-			end,
-		}
+		lspconfig.ts_ls.setup {}
 
 		lspconfig.eslint.setup({
 			settings = {
