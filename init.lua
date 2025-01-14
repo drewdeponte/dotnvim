@@ -29,7 +29,7 @@ require("lazy").setup("plugins")
 -- --------------------------------------------------------------------------
 
 -- Leave eol of source files alone
-vim.opt.fixendofline = false
+vim.opt.fixendofline = true
 
 -- Min number of characters to use for line number column
 vim.opt.numberwidth = 5
