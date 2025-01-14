@@ -1,5 +1,5 @@
 return {
-	dir = 'rename',
+	dir = vim.fn.stdpath("config") .. "/lua/rename",
 	name = 'rename',
 	dev = true,
 	config = function()

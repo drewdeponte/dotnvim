@@ -1,5 +1,5 @@
 return {
-	dir = 'alt',
+	dir = vim.fn.stdpath("config") .. "/lua/alt",
 	name = 'alt',
 	dev = true,
 	dependencies = {

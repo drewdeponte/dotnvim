@@ -1,5 +1,5 @@
 return {
-	dir = 'slides',
+	dir = vim.fn.stdpath("config") .. "/lua/slides",
 	name = 'slides',
 	dev = true,
 	config = function()
