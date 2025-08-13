@@ -11,8 +11,6 @@ return {
 		},
 	},
 	config = function()
-		local lspconfig = require('lspconfig')
-
 		vim.diagnostic.config({ severity_sort = true })
 
 		-- Use an on_attach function to only map the following keys
@@ -63,25 +61,12 @@ return {
 			-- nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 		end
 
-		-- Use a loop to conveniently call 'setup' on multiple servers and
-		-- map buffer local keybindings when the language server attaches
-		local servers = { 'clojure_lsp', 'pyright', 'vimls', 'dockerls', 'terraformls', 'graphql', 'dartls',
-			'kotlin_language_server', 'jdtls' }
-		for _, lsp in ipairs(servers) do
-			lspconfig[lsp].setup {
-				on_attach = on_attach,
-				flags = {
-					debounce_text_changes = 150,
-				},
-				capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-			}
-		end
-
-		lspconfig.ruby_lsp.setup {
+		-- configure the various different lsp servers that I use
+		vim.lsp.config('ruby_lsp', {
 			on_attach = on_attach
-		}
+		})
 
-		lspconfig.lua_ls.setup {
+		vim.lsp.config('lua_ls', {
 			on_attach = on_attach,
 			settings = {
 				Lua = {
@@ -90,50 +75,40 @@ return {
 					}
 				}
 			}
-		}
+		})
 
-		lspconfig.ts_ls.setup {}
-
-		lspconfig.eslint.setup({
+		vim.lsp.config('eslint', {
 			settings = {
 				format = false
 			},
 		})
 
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			pattern = { "*.ts" },
-			command = "EslintFixAll",
-		})
+		-- vim.lsp.config('ltex', {
+		-- 	on_attach = on_attach,
+		-- 	settings = {
+		-- 		ltex = {
+		-- 			language = "en-US",
+		-- 			dictionary = { ['en-US'] = { "NotaCode", "Pullwalla", "Gumleaf", "Manuform", "qmk", "dottmux", "dotnvim", "Uptech", "drewdeponte", "Alacritty", "neovim", "mockist", "mockists", "Kinesis", "AppFit", "OpenSearch", "Faktory", "Firehose", "Deponte", "onDiem", "fvm" } },
+		-- 			additionalRules = {
+		-- 				languageModel = '~/ngrams/',
+		-- 			}
+		-- 		}
+		-- 	}
+		-- })
 
+		-- enable the configurations for the various lsp servers so that when I open a buffer one of them can handle they are auto attached
+		vim.lsp.enable('lua_ls')
+		vim.lsp.enable('ruby_lsp')
+		vim.lsp.enable('clangd')
 
-		lspconfig.ccls.setup {
-			init_options = {
-				compilationDatabaseDirectory = "build",
-				index = {
-					threads = 0,
-				},
-				clang = {
-					excludeArgs = { "-frounding-math" },
-				},
-			}
-		}
+		-- vim.api.nvim_create_autocmd("BufWritePre", {
+		-- 	pattern = { "*.ts" },
+		-- 	command = "EslintFixAll",
+		-- })
 
-		lspconfig.ltex.setup {
-			on_attach = on_attach,
-			settings = {
-				ltex = {
-					language = "en-US",
-					dictionary = { ['en-US'] = { "NotaCode", "Pullwalla", "Gumleaf", "Manuform", "qmk", "dottmux", "dotnvim", "Uptech", "drewdeponte", "Alacritty", "neovim", "mockist", "mockists", "Kinesis", "AppFit", "OpenSearch", "Faktory", "Firehose", "Deponte", "onDiem", "fvm" } },
-					additionalRules = {
-						languageModel = '~/ngrams/',
-					}
-				}
-			}
-		}
-
-		vim.api.nvim_create_autocmd('BufWritePre', {
-			pattern = '*',
-			command = 'lua vim.lsp.buf.format()'
-		})
+		-- vim.api.nvim_create_autocmd('BufWritePre', {
+		-- 	pattern = '*',
+		-- 	command = 'lua vim.lsp.buf.format()'
+		-- })
 	end
 }

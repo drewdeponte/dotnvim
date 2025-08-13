@@ -128,7 +128,7 @@ vim.opt.splitbelow = true
 
 -- Hybrid - Relative except for line currently on which shows absolute number
 vim.opt.number = true
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 
 -- --------------------------------------------
 -- Color scheme
