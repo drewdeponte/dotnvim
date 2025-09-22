@@ -145,6 +145,11 @@ vim.cmd('colorscheme sonokai')
 vim.keymap.set('n', '<leader>mp', '<cmd>!open -a \'Marked 2\' "%"<CR>')
 vim.keymap.set('n', '<Esc>', ':nohlsearch<CR><Esc>', { noremap = true, silent = true })
 
+vim.keymap.set('n', '<leader>gd', function()
+	vim.cmd("vert stag " .. vim.fn.expand("<cword>"))
+	-- vim.cmd("tselect " .. vim.fn.expand("<cword>"))
+end, { desc = 'Open definition in vertical split using tags'})
+
 -- --------------------------------------------------------------------------
 -- AutoCommands
 -- --------------------------------------------------------------------------
